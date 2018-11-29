@@ -1,13 +1,15 @@
 ---
-title: "Linking leaf spectra to the tree of life"
+title: "Linking leaf spectra to the plant tree of life"
 author: 
-   - José Eduardo Meireles^[University of Maine], Jeannine Cavender-Bares^[University of Minnesota], and Brian O'Meara^[University of Tennessee]
-date: \today{}
-geometry: margin=2.5cm
+   - José Eduardo Meireles, Jeannine Cavender-Bares, and Brian O'Meara
+date: 
+geometry: margin=1in
 fontsize: 12pt
 header-includes:
     - \usepackage{setspace}
     - \doublespacing
+    - \usepackage{lineno}
+    - \linenumbers
 output:
   pdf_document:
     toc: false
@@ -16,20 +18,26 @@ output:
     fig_caption: true
 bibliography: references.bib
 biblio-style: authoryear
-abstract:
-    Evolutionary trees recount the history of how biological diversity came to be; giving rise to the incredible variation in plant form and function we see today. In this chapter, we will review what evolutionary trees (phylogenies) are and how to interpret them. We will then describe how to model the evolution of quantitative traits, discuss which evolutionary processes are involved, and familiarize ourselves with specific concepts and metrics – such as phylogenetic signal and evolutionary rates. Next, we will describe a framework that links phylogenies and leaf spectra by coupling models of evolution and radiative transfer models. We will discuss how spectra can help us understand leaf evolution and be used to detect biodiversity. Finally, we will review some of the challenges of subjecting spectra to evolutionary analyses.
+abstract: Evolutionary trees recount the history of how biological diversity came to be; giving rise to the incredible variation in plant form and function captured by leaf spectra. Understanding leaf spectra in light of evolution is thus critical for assessing biodiversity and explaining how spectral diversity is generated. Here, we review what evolutionary trees (phylogenies) are and how to interpret them. We then describe how to model the evolution of quantitative traits, discuss which evolutionary processes are involved, and familiarize ourselves with specific concepts and metrics, such as phylogenetic signal and evolutionary rates. Next, we describe a framework that links phylogenies and leaf spectra by coupling models of evolution and radiative transfer models. We then discuss how spectra can help us understand leaf evolution and be used to detect biodiversity. Finally, we review some of the challenges of subjecting spectra to evolutionary analyses.
 ---
 
 # Introduction
 
-Evolution is the engine behind the diversity in leaf structure and chemistry that is captured in their spectral profiles and, therefore, leaf spectra are inexorably linked to the tree of life. Our ability to distinguish species using spectra is a consequence of trait differences that arise and accumulate over evolutionary time. By the same token, the amount of variation that exists in certain spectral regions is determined by leaf attributes that are ultimately shaped by the interplay between different evolutionary processes. Even the degree to which an individual can respond to environmental change is rooted in evolution. There is an increasing interest in understanding leaf spectra through the lens of evolution and in the context of phylogenetic history. Advances on this front will require, however, a good understanding of how evolutionary biologists leverage the tree of life to make inferences about evolution.
+Evolution is the engine behind the diversity in leaf structure and chemistry that is captured in their spectral profiles and, therefore, leaf spectra are inexorably linked to the tree of life. Our ability to distinguish species using spectra is a consequence of trait differences that arise and accumulate over evolutionary time. By the same token, the amount of variation that exists in certain spectral regions is determined by leaf attributes that are ultimately shaped by the interplay between different evolutionary processes. Even the degree to which an individual can respond to environmental change is rooted in evolution.
 
+There is an increasing interest in understanding leaf spectra through the lens of evolution and in the context of phylogenetic history. Advances on this front will require, however, a good understanding of how evolutionary biologists leverage the tree of life to make inferences about evolution.
 
 # Evolutionary trees
 
+## His Dudeness, Duder, El Duderino
+
+We refer to phylogenies in many different ways because you will run into the different names in the literature. The terms *phylogeny*, *phylogenetic tree*, *evolutionary tree* can be used interchangeably, though phylogeny or phylogenetic tree sound a little more formal. We also use the term *tree of life* to refer to **The** tree of life (the evolutionary tree for all of life), the phylogeny of a really large group of organisms (e.g. plant or the vertebrate tree of life), or sometimes to phylogeny in an abstract sense. Conversely, saying "the maple tree of life" or the the tree of life for cedar creek plants will sound silly. 
+
 ## What are phylogenies and how to read them?
 
-The idea that species descend from a common ancestor is at the very core of the theory of evolution. Evolutionary trees — or phylogenies — represent that branching structure of life, and describe how species are related to each other just like a genealogical tree recounts how people are related. Phylogenetic trees are composed of nodes, representing current organisms (tips) and their common ancestors (internal nodes), that are linked by branches that represent their relationships (\autoref{phylogeny_basics}). Lineages — or clades — are defined as a common ancestor and all of its descendents (\autoref{phylogeny_basics}{a}) and lineages that branch off from the same common ancestor are referred to as sisters. Relatedness among organisms is encoded in the phylogeny’s structure – it’s topology, which defines a series of lineages that are of hierarchically nested. The branch lengths can also convey information, such as the time since divergence, amount of molecular similarity, or number of generations (\autoref{phylogeny_basics}{a-b}). Usually, the distance between tip nodes and the order in which they are drawn has no meaning, but it can sometimes be used to display information about the trait values of a species (\autoref{phylogeny_basics}{c}). Because no one has been taking notes of how lineages split over the last 4 Billion years, phylogenetic trees must be estimated by analyzing current species data, generally DNA sequences, using models of evolution. Therefore, phylogenies are statistical inferences that have uncertainty about their structure and their branch lengths (\autoref{phylogeny_basics}{a,d}).
+The idea that species descend from a common ancestor is at the very core of the theory of evolution. Evolutionary trees — or phylogenies — represent that branching structure of life, and describe how species are related to each other just like a genealogical tree recounts how people are related. Phylogenetic trees are composed of nodes, representing current organisms (tips) and their common ancestors (internal nodes), that are linked by branches that represent their relationships (\autoref{phylogeny_basics}). Lineages — or clades — are defined as a common ancestor and all of its descendants (\autoref{phylogeny_basics}{a}) and lineages that branch off from the same common ancestor are referred to as sisters. Relatedness among organisms is encoded in the phylogeny’s structure – it’s topology, which defines a series of lineages that are of hierarchically nested. The branch lengths can also convey information, such as the time since divergence, amount of molecular similarity, or number of generations (\autoref{phylogeny_basics}{a-b}). Usually, the distance between tip nodes and the order in which they are drawn has no meaning, but it can sometimes be used to display information about the trait values of a species (\autoref{phylogeny_basics}{c}). Because no one has been taking notes of how lineages split over the last 4 Billion years, phylogenetic trees must be estimated by analyzing current species data, generally DNA sequences, using models of evolution. Therefore, phylogenies are statistical inferences that have uncertainty about their structure and their branch lengths (\autoref{phylogeny_basics}{a,d}).
+
+
 
 ![**Phylogenetic trees depict the inferred evolutionary relationships between species.** **a.**
 Clades (or lineages) are defined by a common ancestor and all of its descendants. All nodes – tips and ancestors alike – share a common ancestor at some point in time. The ancestral node from which all tree descends from is called the root. Confidence on the evolutionary relationships are show above internal branches. **b.** Branch lengths (here shown along the x-axis) may represent divergence times, number of generations or amount of molecular divergence (b). **c.** In some cases the y-axis is used to display information about a quantitative trait – such as leaf size – in a tree known as a phenogram or a traitigram. **d.** Unresolved relationships can be represented as three or more descendants stemming from the same ancestor, which is known as a polytomy. Uncertainty in divergence times are generally depicted with error bars at the internal nodes. \label{phylogeny_basics}](figures/phylogeny_basics.png)
@@ -92,11 +100,13 @@ A model that describes the evolution of leaf spectra mediated by the evolution o
 
 ## Making evolutionary inferences from leaf spectra
 
-Integrating spectra and phylogenies raises the exciting prospect of leveraging spectra to estimate aspects of the evolutionary process and test hypotheses. Some questions may be about evolutionary patterns in the spectra themselves. Those include investigations about phylogenetic signal or rates of evolution across the spectrum and there are a handful of studies that take this approach [@Cavender-Bares2016-si, @McManus2016-vt]. For example, Meireles et al. (in review) used a large spectral dataset for many species across the seed plant tree of life to ask how the phylogenetic signal varied across the leaf spectrum and across different phylogenetic groups (\autoref{empirical_phylosig}).
+Integrating spectra and phylogenies raises the exciting prospect of leveraging spectra to estimate aspects of the evolutionary process and test hypotheses. Some questions may be about evolutionary patterns in the spectra themselves. Those include investigations about phylogenetic signal or rates of evolution across the spectrum and there are a handful of studies that take this approach [@Cavender-Bares2016-si, @McManus2016-vt]. For example, Meireles et al. (in review) used a large spectral dataset for many species across the seed plant tree of life to ask how the phylogenetic signal varied across the leaf spectrum and across different phylogenetic groups.
 
-	Because we are often interested in biology, evolutionary inference made at the spectral level will often need to be interpreted a posteriori. For example, the signature of convergent evolution in this particular spectral band likely means that a certain trait X is evolutionarily convergent. An alternative approach is to infer traits from spectra first using either statistical (e.g. PLSR) or Radiative Transfer Model inversions (e.g. PROSPECT), and then study the evolution of those traits. 
+<!-- (\autoref{empirical_phylosig}). -->
 
-![**Phylogenetic signal detected in leaf spectra varies across wavelengths and across the major lineages of seed plants**. **a.** Phylogenetic signal calculated using Blomberg's K (K) estimated for each major lineage of seed plants separately, where regions with significant signal (p-value < 0.05) are marked by colored circles with diameters proportional to K. **b.)) Mean spectra for each of the six major groups: gymnosperms (brown), Magnoliidae (green), monocots (red), non-core eudicots (purple), asterids (orange), and rosids (blue).\label{empirical_phylosig}](figures/empirical_phylosig.png)
+Because we are interested in biology, evolutionary inference made at the spectral level will often need to be interpreted a posteriori. For example, the signature of convergent evolution in this particular spectral band likely means that a certain trait X is evolutionarily convergent. An alternative (and potentially better) approach is to infer traits from spectra first using either statistical (e.g. PLSR) or Radiative Transfer Model inversions (e.g. PROSPECT), and then study the evolution of those traits.
+
+<!-- ![**Phylogenetic signal detected in leaf spectra varies across wavelengths and across the major lineages of seed plants**. **a.** Phylogenetic signal calculated using Blomberg's K (K) estimated for each major lineage of seed plants separately, where regions with significant signal (p-value < 0.05) are marked by colored circles with diameters proportional to K. **b.)) Mean spectra for each of the six major groups: gymnosperms (brown), Magnoliidae (green), monocots (red), non-core eudicots (purple), asterids (orange), and rosids (blue).\label{empirical_phylosig}](figures/empirical_phylosig.png) -->
 
 
 Testing biological hypotheses is also possible because we can calculate the likelihood of our spectral data being generated by different models of evolution. Therefore, we can fit different evolutionary models that reflect our different hypotheses and compare them using a goodness of fit metric such as AIC [@Burnham2002-is]. We foresee innumerous interesting hypotheses being tested using this type of approach, especially related to evolutionary rates and convergent evolution.
@@ -146,6 +156,5 @@ Advances in analyzing spectral data in light of evolution will require keeping m
 ## Ignore phylogeny at your peril
 
 Phylogeny adds complexity to an analysis, but has benefits in new insights (estimating ancestral leaf spectra, helping to go from observations to traits, and more). However, it can be tempting to analyze data on multiple species without incorporating this. The problem with this is many methods that do that, for example, partial least squares regression that estimate traits from spectra, assume species are independent data points. They are not. There is thus the risk of “overcounting” some species: for example, if one wants to develop a model for all plants, and one has five oak species, a gingko, a pine, and a magnolia, the final model will essentially be an oak mode with some deviations. However, the five oaks have shared much of their evolutionary history and so do not represent five independent instances of evolution. Phylogenies can be included into such analyses, and their importance appropriately scaled (in some cases, they will not affect results, but this is only knowable once the tree is used), and make results far more robust.
-
 
 # References
